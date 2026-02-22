@@ -1,0 +1,12 @@
+# JiffyDOS kernals - not redistributable
+sources/jiffydos/*
+!sources/jiffydos/README.txt
+
+# Optional: uncomment to ignore downloaded sources (re-download on clone)
+# sources/zimmers/
+# sources/parobek/
+
+# Build output
+out/*.rom
+out/.basic-*
+*.tmp

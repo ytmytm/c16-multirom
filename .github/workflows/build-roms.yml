@@ -1,0 +1,52 @@
+# Build ROM images for C16 multirom and attach to releases (or as workflow artifacts when run manually).
+name: Build ROMs
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build system ROM (PAL, stock + 6510)
+        working-directory: rom
+        run: |
+          chmod +x build.sh
+          ./build.sh --pal --kernal-lower=stock --kernal-upper=6510
+          mkdir -p ../release-assets
+          cp out/u3-system.rom ../release-assets/u3-system-stock-6510-pal.rom
+          cp out/u4-function.rom ../release-assets/u4-function.rom
+
+      - name: Build system ROM (NTSC, stock + 6510)
+        working-directory: rom
+        run: |
+          ./build.sh --ntsc --kernal-lower=stock --kernal-upper=6510
+          cp out/u3-system.rom ../release-assets/u3-system-stock-6510-ntsc.rom
+
+      - name: Upload to Release
+        if: github.event_name == 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd release-assets
+          for f in *.rom; do
+            echo "Uploading $f"
+            curl -sS -X POST \
+              -H "Authorization: token $GITHUB_TOKEN" \
+              -H "Content-Type: application/octet-stream" \
+              "${{ github.event.release.upload_url }}?name=$f" \
+              --data-binary "@$f"
+          done
+
+      - name: Upload workflow artifacts
+        if: github.event_name == 'workflow_dispatch'
+        uses: actions/upload-artifact@v4
+        with:
+          name: c16-multirom-roms
+          path: release-assets/
+          retention-days: 30
