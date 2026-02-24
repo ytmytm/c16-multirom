@@ -17,13 +17,13 @@ The main idea: the stock C16 uses **two separate chips** for BASIC and KERNAL. B
 
 ## Hardware
 
-![Board](media/board.jpg)
+![Board](media/01.pcb.png)
 
 The board is designed for the **C16** only. It plugs into the original ROM sockets (system and function) and uses:
 
 - **U3**: 27C512 / 27E512 (64K) — system ROM (BASIC + two kernals in one chip).
 - **U4**: 27C512 / 27E512 (64K) — function ROM (3-plus-1 + Parobek).
-- **Glue logic**: 74LS00 (or HCT).
+- **Glue logic**: 74LS00 (or HC/HCT).
 - **Optional**: ATtiny85-20P for RESET long-press bank switching.
 
 Precision pin headers plug into the existing socket footprints. Jumpers J1 and J2 set A15 on U3 and U4 to choose the active 32K half; you can wire switches to J1/J2 instead, or let the ATtiny control them.
@@ -35,7 +35,7 @@ Precision pin headers plug into the existing socket footprints. Jumpers J1 and J
 - 1× 74LS00 or 74HCT00
 - 2× 10K resistors
 - 2× 2-pin pinheaders (J1, J2 — ROM half select)
-- Precision pinheaders as required for socket connection (see schematic)
+- 2x14 + 1x1 - precision pinheaders (round gold pins) for mainboard socket connection
 - 2× 27C512 or 27E512 (64K EPROM/EEPROM)
 - 1× ATtiny85-20P (optional, for long-press bank switch)
 
@@ -43,8 +43,12 @@ Precision pin headers plug into the existing socket footprints. Jumpers J1 and J
 
 1. Solder the precision pin headers so the board mates with the original ROM sockets (U3 and U4 positions on the C16 mainboard). Check orientation.
 2. Solder resistors, 74LS00, and sockets. If using the ATtiny, program it with the firmware in `attiny/` and fit it.
-3. Burn the two 64K ROM images to the EPROMs (see **ROM images** below). Put the system ROM in U3 and the function ROM in U4.
-4. Set J1 and J2 (or leave open for default halves). Power on and test.
+3. Burn the two 64K ROM images to the EPROMs (see **ROM images** below). Put the system ROM in the new U3 and the function ROM in the new U4 (note that their positions are reversed when compared to the mainboard).
+4. Set J1 and J2 (or leave them open for default halves). Power on and test.
+
+**Note on PLA replacements:** If you use PLA replacements (daughterboards with GAL or CPLD) that are wider than a 28-pin DIL chip, the extra width can make the multirom board a tight fit. After soldering the sockets—but before plugging in any chips—you may want to use sandpaper to remove some material from the right-hand edge of the PCB so it fits better.
+
+There are no traces on that side; you can cut right up to the actual pins of the new U4 socket, leaving them open like half-circles.
 
 ## Project files (KiCad)
 
