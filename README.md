@@ -3,17 +3,18 @@
 [![Build ROMs](https://github.com/ytmytm/c16-multirom/actions/workflows/build-roms.yml/badge.svg)](https://github.com/ytmytm/c16-multirom/actions/workflows/build-roms.yml)
 [![Latest release](https://img.shields.io/github/v/release/ytmytm/c16-multirom?include_prereleases)](https://github.com/ytmytm/c16-multirom/releases)
 
-This project is a **multirom board for the Commodore 16 only**. It is heavily inspired by the [ROM update for Commodore 16](https://myoldcomputer.nl/other-computers/commodore-16/rom-update-commodore-16/) at My Old Computer. It does not fit the Plus/4 mechanically, and the Plus/4 already has a function ROM on board.
+This project is a **multirom board for the Commodore 16 only**. It is heavily inspired by the [ROM update for Commodore 16](https://myoldcomputer.nl/other-computers/commodore-16/rom-update-commodore-16/) at My Old Computer.
 
-The main idea: the stock C16 uses **two separate chips** for BASIC and KERNAL. By putting **BASIC and KERNAL in a single 64K chip** (U3), we free the second socket for a **function ROM** (U4)—e.g. 3-plus-1 and [Parobek](https://github.com/ytmytm/plus4-parobek)—so the C16 gains capabilities similar to the Plus/4. Replacing the original mask ROMs with EEPROMs (e.g. 27E512) also reduces power draw.
+The stock C16 uses **two separate chips** for BASIC and KERNAL. By putting **BASIC and KERNAL in a single 64K chip** (U3), we free the second socket for a **function ROM** (U4) e.g. 3-plus-1 and [Parobek](https://github.com/ytmytm/plus4-parobek), so the C16 gains capabilities similar to the Plus/4. Replacing the original mask ROMs with EEPROMs (e.g. 27E512) also reduces power draw.
 
-**ROM switching** is an extra: each 64K chip holds two 32K images selected by address line A15. You can fix the choice with **jumpers** (closed = lower half, open = upper half), use **switches** on J1/J2, or add the optional **ATtiny85** to cycle through the four combinations with a long press on RESET. The ATtiny is optional; many users will set jumpers once and leave them.
+**ROM switching**: each 64K chip holds two 32K images selected by address line A15. You can fix the choice with **switches** or **jumpers** on J1/J2 (closed = lower half, open = upper half), or add the optional **ATtiny85** to cycle through the four combinations with a long press on RESET.
+The ATtiny is optional and untested yet.
 
 ## What you get
 
-- **U3 (system ROM)**: One 64K chip with BASIC (same in both halves) and two kernals—e.g. stock in the lower 32K and JiffyDOS or 6510-patched in the upper 32K. Jumper J1 or a switch (or the ATtiny) selects which half is active.
-- **U4 (function ROM)**: One 64K chip with **3-plus-1** in the lower 32K and **Parobek** in the upper 32K. Jumper J2 or a switch (or the ATtiny) selects 3-plus-1 vs Parobek.
-- **Optional ATtiny85**: long-press RESET cycles U3 and U4 A15 through 00, 01, 10, 11 so you can change ROM set without opening the case.
+- **U3 (system ROM)**: One 64K chip with BASIC (same in both halves) and two kernals—e.g. stock in the lower 32K and JiffyDOS or 6510-patched in the upper 32K
+- **U4 (function ROM)**: One 64K chip with **3-plus-1** in the lower 32K and **Parobek** in the upper 32K
+- **Optional ATtiny85**: long-press RESET cycles U3 and U4 A15 through 00, 01, 10, 11 so you can change ROM set without opening the case or drilling holes for switches
 
 ## Hardware
 
