@@ -38,4 +38,4 @@ help:
 	@echo "  jiffydos-kernal-pal.bin, jiffydos-kernal-ntsc.bin"
 
 clean:
-	rm -f $(ROMS) $(OUT_DIR)/.basic-low.bin $(OUT_DIR)/.basic-high.bin
+	rm -f $(ROMS)

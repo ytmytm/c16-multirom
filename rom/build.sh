@@ -238,20 +238,14 @@ download_if_missing "$URL_3PLUS1_LOW" "$Zimmers/3-plus-1.317053-01.bin"
 download_if_missing "$URL_3PLUS1_HIGH" "$Zimmers/3-plus-1.317054-01.bin"
 ensure_parobek_rom
 
-# BASIC: if 32K use low/high 16K; if 16K use same for both halves
-BASIC_FULL="$Zimmers/basic.318006-01.bin"
-BASIC_LOW="$OUT/.basic-low.bin"
-BASIC_HIGH="$OUT/.basic-high.bin"
-BASIC_SZ="$(wc -c < "$BASIC_FULL")"
-head -c "$SIZE_16K" "$BASIC_FULL" > "$BASIC_LOW"
-if [[ "$BASIC_SZ" -ge "$(( SIZE_16K * 2 ))" ]]; then
-  tail -c "+$(( SIZE_16K + 1 ))" "$BASIC_FULL" | head -c "$SIZE_16K" > "$BASIC_HIGH"
-else
-  cp "$BASIC_LOW" "$BASIC_HIGH"
-fi
-
 # U3: basic-low (16K) + kernal lower (16K) + basic-high (16K) + kernal upper (16K)
-build_64k_rom "$OUT/u3-system.rom" "$BASIC_LOW" "$KERNAL_FILE_LOWER" "$BASIC_HIGH" "$KERNAL_FILE_UPPER"
+# BASIC: if 32K use low/high 16K; if 16K use same for both halves (no intermediate .basic* files)
+BASIC_FULL="$Zimmers/basic.318006-01.bin"
+build_64k_rom "$OUT/u3-system.rom" \
+  <(head -c "$SIZE_16K" "$BASIC_FULL") \
+  "$KERNAL_FILE_LOWER" \
+  <( ( BASIC_SZ=$(wc -c < "$BASIC_FULL"); if [[ "$BASIC_SZ" -ge "$(( SIZE_16K * 2 ))" ]]; then tail -c "+$(( SIZE_16K + 1 ))" "$BASIC_FULL" | head -c "$SIZE_16K"; else head -c "$SIZE_16K" "$BASIC_FULL"; fi ) ) \
+  "$KERNAL_FILE_UPPER"
 echo "  U3 lower (A15=0): BASIC + $KERNAL_LOWER"
 echo "  U3 upper (A15=1): BASIC + $KERNAL_UPPER"
 
