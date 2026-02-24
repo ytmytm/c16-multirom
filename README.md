@@ -42,13 +42,17 @@ Precision pin headers plug into the existing socket footprints. Jumpers J1 and J
 ### Assembly
 
 1. Solder the precision pin headers so the board mates with the original ROM sockets (U3 and U4 positions on the C16 mainboard). Check orientation.
-2. Solder resistors, 74LS00, and sockets. If using the ATtiny, program it with the firmware in `attiny/` and fit it.
+2. Solder resistors, 74LS00, and sockets. If using the ATtiny, program it with the firmware in `attiny/` and fit it. **Note:** The ATtiny firmware is untested.
 3. Burn the two 64K ROM images to the EPROMs (see **ROM images** below). Put the system ROM in the new U3 and the function ROM in the new U4 (note that their positions are reversed when compared to the mainboard).
 4. Set J1 and J2 (or leave them open for default halves). Power on and test.
 
 **Note on PLA replacements:** If you use PLA replacements (daughterboards with GAL or CPLD) that are wider than a 28-pin DIL chip, the extra width can make the multirom board a tight fit. After soldering the sockets—but before plugging in any chips—you may want to use sandpaper to remove some material from the right-hand edge of the PCB so it fits better.
 
 There are no traces on that side; you can cut right up to the actual pins of the new U4 socket, leaving them open like half-circles.
+
+![C16 multirom board installed in mainboard](media/02.installed.jpg)
+
+*In the photo: the yellow square marks the /BASIC line, which is not connected on J3 because J5 takes it from the mainboard socket (U3 pin 22). The green and purple rectangles show how the J3 /C0LOW and /C0HIGH lines are taken from U14 pins 5 and 11.*
 
 ## Project files (KiCad)
 
