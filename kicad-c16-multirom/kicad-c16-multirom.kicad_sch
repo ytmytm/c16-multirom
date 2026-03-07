@@ -3226,7 +3226,7 @@
 		)
 		(uuid 0b0098aa-577a-45b7-883b-870289866fd4)
 	)
-	(text "~{RESET} from U15 pin 1\nor vias near U14 pin 11\nor U9 pin 2"
+	(text "~{RESET} from U15 pin 1\nor U9 pin 2\nor vias near U14 pin 11\n"
 		(exclude_from_sim no)
 		(at 253.746 132.842 0)
 		(effects

@@ -8,7 +8,6 @@ This project is a **multirom board for the Commodore 16 only**. It is heavily in
 The stock C16 uses **two separate chips** for BASIC and KERNAL. By putting **BASIC and KERNAL in a single 64K chip** (U3), we free the second socket for a **function ROM** (U4) e.g. 3-plus-1 and [Parobek](https://github.com/ytmytm/plus4-parobek), so the C16 gains capabilities similar to the Plus/4. Replacing the original mask ROMs with EEPROMs (e.g. 27E512) also reduces power draw.
 
 **ROM switching**: each 64K chip holds two 32K images selected by address line A15. You can fix the choice with **switches** or **jumpers** on J1/J2 (closed = lower half, open = upper half), or add the optional **ATtiny85** to cycle through the four combinations with a long press on RESET.
-The ATtiny is optional and untested yet.
 
 ## What you get
 
